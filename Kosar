@@ -1,99 +1,99 @@
 using System;
-namespace ConsoleApp13
-{
-class kosar_fuggveny
-{
-struct kosar
-{
-public string nev;
-public int magas;
-public int pont;
-}
-static void Main(string[] args)
-{
-//Ellenőrzött adatbekérés kiiratás táblázatos formába!
-int letszam;
-do
-{
-Console.WriteLine("Adja meg a létszámot 5-12 között!");
-letszam = int.Parse(Console.ReadLine());
-}
-while (letszam > 12 || letszam < 5);
-kosar[] csop = new kosar[letszam];
-adatbe(csop);
-kiir(csop);
-//legmagasabb kosaras
-Console.WriteLine("A legmagasabb kosaras: {0}", legmagas(csop));
-//dobások pontátlaga
-Console.WriteLine("A csapat dobásainak pont átlaga: {0}", átlag(csop));
-//leg golerősebb játékos
-Console.WriteLine("A legtöbb pontot szerzett játékos: {0}", gole(csop));
-//50-nél többet dobott
-ötven_plusz(csop);
-}
-static void adatbe(kosar[] t)
-{
-Random rnd = new Random();
-for (int i = 0; i < t.Length; i++)
-{
-Console.WriteLine("Adja meg a(z) {0} tanuló nevét!", i + 1);
-t[i].nev = Console.ReadLine();
-t[i].magas = rnd.Next(170, 221);
-t[i].pont = rnd.Next(0, 101);
-}
-}
-static void kiir(kosar[] t)
-{
-for (int i = 0; i < t.Length; i++)
-Console.WriteLine("{0}. {1,-20} {2,-5} {3,5}", i + 1, t[i].nev,
-t[i].magas, t[i].pont);
-}
-static string legmagas(kosar[] t)
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-PROGRAMOZÁS
-2022/2023 I. FÉLÉV
-6_KONZULTÁCIÓ_GYAKORLAT_3
+namespace Kosar
+{
+    internal class Program
+    {
+        struct kosar
+        {
+            public string nev;
+            public int magas;
+            public int pont;
+        }
+        static void Main(string[] args)
+        {
+            //Ellenőrzütt adatbekérés kiíratás táblázatos formába!
+            int letszam;
+            do
+            {
+                Console.WriteLine("Adja meg a létszámot 5-12 között!");
+                letszam = int.Parse(Console.ReadLine());
+            }
+            while (letszam > 12 || letszam < 5);
+            kosar[] csop = new kosar[letszam];
+            adatbe(csop);
+            kiir(csop);
+            //legmagasabb kosaras
+            Console.WriteLine("A legmagasabb kosaras: {0}", legmagas(csop));
+            //dobások pontátlaga
+            Console.WriteLine("A csapat dobásainak pont átlaga: {0}", átlag(csop));
+            //leg gólerősebb játékos
+            Console.WriteLine("A legtöbb pontot szerzett játékos: {0}", gole(csop));
+            //50-nél többet dobott
+            ötven_plusz(csop);
+        }
+        static void adatbe(kosar[] t)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < t.Length; i++)
+            {
+                Console.WriteLine("Adja meg a(z) {0} tanuló nevét!", i + 1);
+                t[i].nev = Console.ReadLine();
+                t[i].magas = rnd.Next(170, 221);
+                t[i].pont = rnd.Next(0, 101);
+            }
+        }
+        static void kiir(kosar[] t)
+        {
+            for (int i = 0; i < t.Length; i++)
+                Console.WriteLine("{0}. {1,-20} {2,-5} {3,5}", i + 1, t[i].nev, t[i].magas, t[i].pont);
+        }
+        static string legmagas(kosar[] t)
+        {
+            int max = 0;
+            for (int j = 0; j < t.Length; j++)
+            {
+                if (t[j].magas > t[max].magas)
+                {
+                    max = j;
+                }
+            }
+            return t[max].nev;
+        }
+        static float átlag(kosar[] t)
+        {
+            float átl = 0;
+            for (int i = 0; i < t.Length; i++)
+            {
+                átl = átl + t[i].pont;
+            }
+            return átl / t.Length;
+        }
+        static string gole(kosar[] t)
+        {
+            int max = 0;
+            for (int j = 0; j < t.Length; j++)
+            {
+                if (t[j].pont > t[max].pont)
+                {
+                    max = j;
+                }
+            }
+            return t[max].nev;
+        }
+        static void ötven_plusz(kosar[] t)
+        {
+            Console.WriteLine("50 pont felett dobott: ");
+            for (int i = 0; i<t.Length; i++)
+            {
+                if (t[i].pont > 50)
+                    Console.WriteLine("{0}", t[i].nev);
+            }
+        }   
+    }
+}
 
-{
-int max = 0;
-for (int j = 0; j < t.Length; j++)
-{
-if (t[j].magas > t[max].magas)
-{
-max = j;
-}
-}
-return t[max].nev;
-}
-static float átlag(kosar[] t)
-{
-float átl = 0;
-for (int i = 0; i < t.Length; i++)
-{
-átl = átl + t[i].pont;
-}
-return átl / t.Length;
-}
-static string gole(kosar[] t)
-{
-int max = 0;
-for (int j = 0; j < t.Length; j++)
-{
-if (t[j].pont > t[max].pont)
-{
-max = j;
-}
-}
-return t[max].nev;
-}
-static void ötven_plusz(kosar[] t)
-{
-Console.WriteLine("50 pont felett dobott:");
-for (int i = 0; i < t.Length; i++)
-{
-if (t[i].pont > 50)
-Console.WriteLine("{0}", t[i].nev);
-}
-}
-}
-}
